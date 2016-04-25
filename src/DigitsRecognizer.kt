@@ -1,5 +1,4 @@
 import java.io.File
-//import org.funktionale.partials.*
 
 fun main(args: Array<String>)
 {
@@ -72,23 +71,4 @@ fun main(args: Array<String>)
   val endTime = System.currentTimeMillis()
   val elapsedTime = endTime - startTime
   println(">>> Elapsed time is: $elapsedTime ms")
-
-//  val pix = intArrayOf(1, 3, 6)
-//  classify(trainingData, manhattanDistance, pix)
-
-//  fun classify(trainingSet: List<Observation>, dist: (IntArray, IntArray) -> Int, pixels: IntArray ) : String
-//  {
-//    val observation =  trainingSet.minBy { x -> dist(pixels, pixels) }
-//    return observation!!.label
-//  }
-
-
-  // Copied from the example page...
-//  val prefixAndPostfix: (String, String, String) -> String = { prefix, x,postfix -> "${prefix}${x}${postfix}"}
-//
-//  val prefixAndBang: (String, String) -> String = prefixAndPostfix.partially3("!")
-//
-//  val hello: (String) -> String = prefixAndBang.partially1("Hello, ")
-//
-//  assertEquals(hello("funKTionale"),"Hello, funKTionale!")
 }
