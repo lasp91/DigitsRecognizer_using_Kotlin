@@ -1,9 +1,7 @@
 import java.io.File
-
 fun main(args: Array<String>)
 {
   data class Observation (val label: String , val Pixels: IntArray)
-//  val Distance: Int =  (pair : Pair<IntArray, IntArray>)
 
   fun observationData(csvData: String) : Observation
   {
