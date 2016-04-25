@@ -1,5 +1,5 @@
 import java.io.File
-import org.funktionale.partials.*
+//import org.funktionale.partials.*
 
 fun main(args: Array<String>)
 {
