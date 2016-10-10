@@ -8,3 +8,4 @@ Running the code is also possible to compare the execution time between the diff
 
 The FVS2015 project is in: https://github.com/lasp91/DigitsRecognizer---Experiments-with-VS2015/blob/master/README.md
 It also includes code for compiled F#, C++ (based on the original C# code) and a "Functional C++".
+Test
