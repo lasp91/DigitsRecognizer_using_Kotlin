@@ -6,4 +6,5 @@ I basically created a new “Kotlin” code project based on the existing “F#�
 
 Running the code is also possible to compare the execution time between the different projects.
 
-The F# project is in: 
+The F# project is in: https://github.com/lasp91/DigitsRecognizer---Experiments-with-VS2015/blob/master/README.md
+
