@@ -4,7 +4,7 @@
     <exe-path>D:\Program Files (x86)\nodejs\bower.cmd</exe-path>
     <config-path>D:\Program Files\nodejs\node_modules\bower\node_modules\bower-json\package.json</config-path>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" default="false" project-jdk-name="1.8 (1)" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
