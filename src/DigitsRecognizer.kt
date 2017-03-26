@@ -43,22 +43,25 @@ val manhattanDistanceImperative = fun(pixels1: IntArray, pixels2: IntArray) : In
   return dist
 }
 
-val manhattanDistanceParallel = fun(pixels1: IntArray, pixels2: IntArray) : Int
-{
-  val dist = AtomicInteger(0)
-
-  IntStream.range(0, pixels1.size).parallel().forEach { i ->
-    dist.addAndGet(Math.abs(pixels1[i] - pixels2[i])) }
-
-  return dist.toInt()
-}
-
 val euclideanDistance = { pixels1: IntArray, pixels2: IntArray ->
     val dist = pixels1.zip(pixels2)
 //      .map { p -> Math.pow((p.first - p.second).toDouble(), 2.0) }
       .map({ p -> val dist = (p.first - p.second); dist * dist })
       .sum()
   dist
+}
+
+val euclideanDistanceImperative = fun(pixels1: IntArray, pixels2: IntArray) : Int
+{
+  var dist = 0
+
+  for (i in 0 until pixels1.size)
+  {
+    val dif = Math.abs(pixels1[i] - pixels2[i])
+    dist += dif * dif
+  }
+
+  return dist
 }
 
 fun classify(trainingSet: Array<Observation>, dist: Distance, pixels: IntArray) : String
@@ -69,24 +72,21 @@ fun classify(trainingSet: Array<Observation>, dist: Distance, pixels: IntArray) 
 
 fun evaluate(validationSet: Array<Observation>, classifier: (IntArray) -> String) : Unit
 {
-  val average = validationSet
-      .map({ (label, Pixels) -> if (classifier(Pixels) == label) 1.0 else 0.0 })
-      .average()
-  println("Correct: $average")
-}
-//    val count = validationSet.size
-//    var sum = 0
-//
-//    for (i in 0 .. count - 1)
-//    {
-//      if (classifier(validationSet[i].Pixels) == validationSet[i].label)
-//      {
-//        sum += 1
-//      }
-//    }
-//
-//    println("Correct:  ${sum.toDouble() / count}")
-//  }
+//  val average = validationSet
+//      .map({ (label, Pixels) -> if (classifier(Pixels) == label) 1.0 else 0.0 })
+//      .average()
+//  println("Correct: $average")
+//}
+    val count = validationSet.size
+    val sum = AtomicInteger(0)
+
+    IntStream.range(0, validationSet.size).parallel().forEach { i ->
+      if (classifier(validationSet[i].Pixels) == validationSet[i].label)
+        sum.addAndGet(1)
+    }
+
+    println("Correct:  ${sum.toDouble() / count}")
+  }
 
 //-----------------------------------------------------------------------------------------
 
@@ -103,13 +103,32 @@ fun main(args: Array<String>)
     return classify(trainingData, manhattanDistanceImperative, pixels)
   }
 
-  val startTime = System.currentTimeMillis()
+  val euclideanClassifier = fun(pixels: IntArray) : String
+  {
+    return classify(trainingData, euclideanDistanceImperative, pixels)
+  }
 
-  println("  Manhattan Kotlin")
-  evaluate(validationData, manhattanClassifier)
+  run {
+    val startTime = System.currentTimeMillis()
 
-  val endTime = System.currentTimeMillis()
-  val elapsedTime = (endTime - startTime) / 1000.0
+    println("  Manhattan Kotlin")
+    evaluate(validationData, manhattanClassifier)
 
-  println(">>> Elapsed time is: $elapsedTime sec")
+    val endTime = System.currentTimeMillis()
+    val elapsedTime = (endTime - startTime) / 1000.0
+
+    println(">>> Elapsed time is: $elapsedTime sec")
+  }
+
+  run {
+    val startTime = System.currentTimeMillis()
+
+    println("  Euclidean Kotlin")
+    evaluate(validationData, euclideanClassifier)
+
+    val endTime = System.currentTimeMillis()
+    val elapsedTime = (endTime - startTime) / 1000.0
+
+    println(">>> Elapsed time is: $elapsedTime sec")
+  }
 }
